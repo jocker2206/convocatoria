@@ -1,0 +1,95 @@
+body {
+  min-height: 100vh;
+  padding-top: 4.5rem;
+}
+
+/* 
+  Global
+*/
+
+.logo {
+  width: 30px;
+  margin-right: 0.4em;
+}
+
+
+.btn-convocatoria {
+  height: 50px;
+  font-size: 1.2em!important;
+}
+
+.select-convocatoria {
+  height: 50px!important;
+  font-size: 1.2em!important;
+}
+
+
+/* Theme default */
+.theme-green .navbar {
+  background: #363642;
+}
+
+
+/* Theme Blue */
+.theme-default .navbar {
+  background: #363642;
+}
+
+.theme-blue .navbar {
+  background: #346cb0;
+}
+
+.theme-blue .navbar a {
+  color: #fff;
+}
+
+.theme-blue .navbar .btn-outline {
+  color: #346cb0;
+  background: #fff;
+}
+
+.theme-blue .btn-convocatoria {
+  background: transparent!important;
+  border: 2px solid #346cb0!important;
+  color: #346cb0!important;
+}
+
+.theme-blue .btn-convocatoria:hover {
+  background: #346cb0!important;
+  border: 2px solid #346cb0!important;
+  color: #fff!important;
+  transition: all .4s;
+}
+
+/* Theme Green */
+.theme-green .navbar {
+  background: #00a28a;
+}
+
+.theme-green .navbar a {
+  color: #eceff1;
+}
+
+.theme-green .navbar .btn-outline {
+  color: #00a28a;
+  background: #fff;
+}
+
+
+.theme-green .btn-convocatoria {
+  background: transparent!important;
+  border: 2px solid #4db6ac!important;
+  color: #4db6ac!important;
+}
+
+.theme-green .btn-convocatoria:hover {
+  background: #4db6ac!important;
+  border: 2px solid #4db6ac!important;
+  color: #fff!important;
+  transition: all .4s;
+}
+
+.theme-green .btn-mas-info {
+  background: #00a28a!important;
+  color: #fff!important;
+}

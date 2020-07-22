@@ -1,0 +1,52 @@
+#page_change {
+    position: absolute;
+    z-index: 2000;
+    top: 0px;
+}
+
+.page_loading {
+    width: 0px;
+    height: 0px;
+    display: block;
+    background: #343a40;
+    animation-duration: 2s;
+    animation-name: slidein;
+} 
+
+
+@keyframes slidein {
+    from {
+      height: 7px;
+      width: 10%
+    }
+  
+    to {
+        height: 7px;
+        width: 65%
+    }
+}
+
+.page_end {
+    width: 0px;
+    height: 0px;
+    display: block;
+    background: #343a40;
+    animation-duration: 1.5s;
+    animation-name: slideout;
+} 
+
+@keyframes slideout {
+    from {
+      height: 7px;
+      width: 80%
+    }
+    to {
+        height: 7px;
+        width: 100%
+    }
+  }
+
+
+.capitalize {
+    text-transform: capitalize;    
+}
