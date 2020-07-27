@@ -10,20 +10,21 @@ import Footer from '../components/footer';
 import Show from '../components/show';
 import LoaderPage from '../components/loaderPage';
 import { authentication } from '../services/apis';
+import LoadingGlobal from '../components/loadingGlobal';
 
 Router.onRouteChangeStart = () => {
-    let pageChange = document.getElementById('page_change');
-    pageChange.className = 'page_loading';
+    let loadingBrand = document.getElementById('loading-brand');
+    loadingBrand.style.display = 'block';
 };
 
 Router.onRouteChangeComplete = () => {
-    let pageChange = document.getElementById('page_change');
-    pageChange.className = 'page_end';
+    let loadingBrand = document.getElementById('loading-brand');
+    loadingBrand.style.display = 'none';
 };
   
 Router.onRouteChangeError = () => {
-    let pageChange = document.getElementById('page_change');
-    pageChange.className = 'page_end';
+    let loadingBrand = document.getElementById('loading-brand');
+    loadingBrand.style.display = 'none';
 };
 
 export default class MyApp extends App {
@@ -60,9 +61,14 @@ export default class MyApp extends App {
         loading: false
     }
 
+    handleLoading = (value) => {
+        this.setState({ loading: value });
+    }
+
     render() {
 
         let { Component, pageProps, isLoggin, is_render, __app, message } = this.props;
+        let { loading } = this.state;
 
         return (
             <Fragment>
@@ -75,7 +81,7 @@ export default class MyApp extends App {
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     <link rel="shortcut icon" type="image/x-icon" href={__app.icon || '/img/loading_page.png'}></link>
                     {/* embedido */}
-                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossOrigin="anonymous"/>
+                    <link rel="stylesheet" href="/css/bootstrap.css"/>
                     {/* styles themplate */}
                     <link rel="stylesheet" id="google-fonts-1-css" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;ver=5.4.1" type="text/css" media="all"/>
                     {/* styles para el preloader de la página */}
@@ -84,18 +90,22 @@ export default class MyApp extends App {
                     <link rel="stylesheet" type="text/css" href="/css/page_loading.css"/>
                 </Head>
                 
-                <div id="page_change"></div>
+                <LoadingGlobal display="none" id="loading-brand"/>
 
                 <Show condicion={!is_render}>
                     <LoaderPage message={message}/>
                 </Show>
                 
                 <Show condicion={is_render}>
+                    <Show condicion={loading}>
+                        <LoadingGlobal display="block"/>
+                    </Show>
+
                     <div className={`theme-${app.theme || 'default'}`}>
                         <Navbar app={__app}/>
                         
                         <div className={`mt-5 pt-4`}>
-                            <Component {...pageProps} isLoggin={isLoggin}/>
+                            <Component {...pageProps} isLoggin={isLoggin} setLoading={this.handleLoading}/>
                         </div>
                     </div>
 

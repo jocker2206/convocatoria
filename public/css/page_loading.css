@@ -1,52 +1,26 @@
-#page_change {
-    position: absolute;
-    z-index: 2000;
-    top: 0px;
+.uppercase {
+    text-transform: uppercase!important;
 }
 
-.page_loading {
-    width: 0px;
-    height: 0px;
-    display: block;
-    background: #343a40;
-    animation-duration: 2s;
-    animation-name: slidein;
-} 
+.loading-brand {
+    transition: all 0.4s;
+    transform: scale(1);
+    animation-name: loading_zoom;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
 
 
-@keyframes slidein {
+@keyframes loading_zoom {
     from {
-      height: 7px;
-      width: 10%
-    }
-  
-    to {
-        height: 7px;
-        width: 65%
+        transition: all 0.4s;
+        transform: scale(0.7);
+    } to {
+        transition: all 0.4s;
+        transform: scale(0.9);
     }
 }
 
-.page_end {
-    width: 0px;
-    height: 0px;
-    display: block;
-    background: #343a40;
-    animation-duration: 1.5s;
-    animation-name: slideout;
-} 
 
-@keyframes slideout {
-    from {
-      height: 7px;
-      width: 80%
-    }
-    to {
-        height: 7px;
-        width: 100%
-    }
-  }
-
-
-.capitalize {
-    text-transform: capitalize;    
-}
