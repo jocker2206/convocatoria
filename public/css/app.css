@@ -93,3 +93,7 @@ body {
   background: #00a28a!important;
   color: #fff!important;
 }
+
+.them-green .text-item {
+  color: #00a28a!important;
+}
