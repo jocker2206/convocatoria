@@ -3,6 +3,8 @@ import { Button, Table, Tab } from 'semantic-ui-react';
 import { findStaff } from '../../services/request/staff';
 import Show from '../../components/show';
 import { authentication, recursoshumanos } from '../../services/apis';
+import Swal from 'sweetalert2';
+import Router from 'next/router';
 
 export default class Oferta extends Component
 {
@@ -65,6 +67,16 @@ export default class Oferta extends Component
             if (!success) throw new Error(message);
             this.setState({ sede })
         }).catch(err => console.log(err.message));
+    }
+
+    handleLogin = async () => {
+        let answer = await Swal.fire({ icon: 'warning', text: `¿Deseas iniciar sesión?` });
+        if (answer) {
+            let { push } = Router;
+            let { staff } = this.props;
+            let href = `/oferta/${staff.slug}`;
+            push({ pathname: '/login', query: { href } })
+        }
     }
 
     render() {
@@ -177,6 +189,7 @@ export default class Oferta extends Component
                         <Show condicion={!isLoggin}>
                             <Button fluid 
                                 className="btn-convocatoria"
+                                onClick={this.handleLogin}
                             >
                                 Inicia Sesión
                             </Button>

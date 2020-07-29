@@ -9,7 +9,7 @@ export const TOKEN = (ctx) => {
 export const AUTH = async (ctx) => {
     if (!await TOKEN(ctx)) {
         // not authorize
-        ctx.res.writeHead(301, { Location: '/sign' })
+        ctx.res.writeHead(301, { Location: '/login' })
         ctx.res.end();
         ctx.res.finished = true;
     }

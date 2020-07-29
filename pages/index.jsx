@@ -3,6 +3,7 @@ import { Form, Button, List, Card, CardContent, CardHeader, CardMeta } from 'sem
 import ListOferta from '../components/listOferta';
 import { recursoshumanos } from '../services/apis';
 import Show from '../components/show';
+import Router from 'next/router';
 
 export default class Index extends Component
 {
@@ -23,8 +24,23 @@ export default class Index extends Component
         }
     };
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
+        await this.setting();
         this.getConvocatoria();
+        this.getStaff(true);
+    }
+
+    setting = async () => {
+        await this.setState((state, props) => ({
+            convocatoria_id: props.query.convocatoria_id || ""
+        }));
+    }
+
+    handleSearch = () => {
+        let { push, pathname, query } = Router;
+        query.convocatoria_id = this.state.convocatoria_id;
+        push({ pathname, query });
+        this.getStaff(true);
     }
 
     getConvocatoria = async (page = 1) => {
@@ -63,6 +79,7 @@ export default class Index extends Component
         }
     }
 
+
     render() {
 
         let { query, pathname } = this.props;
@@ -87,7 +104,7 @@ export default class Index extends Component
 
                         <div className="col-md-3 mb-1">
                             <Button className="btn-convocatoria" fluid
-                                onClick={(e) => this.getStaff(true)}
+                                onClick={(e) => this.handleSearch()}
                             >
                                 <i className="fas fa-search"></i> Buscar
                             </Button>

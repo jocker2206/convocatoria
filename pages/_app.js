@@ -102,7 +102,7 @@ export default class MyApp extends App {
                     </Show>
 
                     <div className={`theme-${app.theme || 'default'}`}>
-                        <Navbar app={__app}/>
+                        <Navbar app={__app} isLoggin={isLoggin}/>
                         
                         <div className={`mt-5 pt-4`}>
                             <Component {...pageProps} isLoggin={isLoggin} setLoading={this.handleLoading}/>
