@@ -5,14 +5,14 @@ import NextCookies from 'next-cookies';
 
 
 let headers = {
-    Authorization: `Bearer ${Cookies.get('auth_convocatoria')}`
+    AuthConvocatoria: `${Cookies.get('convocatoria_token')}`
 };
 
-export const configAuthorization = (ctx) => {
-    return `Bearer ${NextCookies(ctx)['auth_convocatoria']}`;
+export const configAuthConvocatoria = async (ctx) => {
+    return await `${NextCookies(ctx)['convocatoria_token']}`;
 }
 
-const ConfigHeaders = (ctx = null, config = { }) => {
+const ConfigHeaders = async (ctx = null, config = { }) => {
     let newConfig = Object.assign({}, config);
     newConfig.headers = config.headers || {};
     // add credenciales
@@ -21,9 +21,9 @@ const ConfigHeaders = (ctx = null, config = { }) => {
     }
     // validar ctx
     if (ctx) {
-        newConfig.headers.Authorization = configAuthorization(ctx);
+        newConfig.headers.AuthConvocatoria = await configAuthConvocatoria(ctx);
     } else {
-        newConfig.headers.Authorization = headers.Authorization
+        newConfig.headers.AuthConvocatoria = await headers.AuthConvocatoria
     };
     return newConfig;
 }   
@@ -33,11 +33,11 @@ const ConfigHeaders = (ctx = null, config = { }) => {
  *  api para consumir el authenticador
  */
 export const authentication = {
-    get: (path, config = { }, ctx = null) => {
-        return axios.get(`${url.API_AUTHENTICATION}/${path}`, ConfigHeaders(ctx, config));
+    get: async (path, config = { }, ctx = null) => {
+        return axios.get(`${url.API_AUTHENTICATION}/${path}`, await ConfigHeaders(ctx, config));
     },
-    post: (path, body = { }, config = { }, ctx = null) => {
-        return axios.post(`${url.API_AUTHENTICATION}/${path}`, body, ConfigHeaders(ctx, config));
+    post: async (path, body = { }, config = { }, ctx = null) => {
+        return axios.post(`${url.API_AUTHENTICATION}/${path}`, body, await ConfigHeaders(ctx, config));
     },
     path: url.API_AUTHENTICATION
 };
@@ -47,14 +47,14 @@ export const authentication = {
  * api para consumir el sistema de planillas
  */
 export const unujobs = {
-    get: (path, config = { }, ctx) => {
-        return axios.get(`${url.API_UNUJOBS}/${path}`, ConfigHeaders(ctx, config));
+    get: async (path, config = { }, ctx) => {
+        return axios.get(`${url.API_UNUJOBS}/${path}`, await ConfigHeaders(ctx, config));
     },
-    post: (path, body = { }, config = { }, ctx) => {
-        return axios.post(`${url.API_UNUJOBS}/${path}`, body, ConfigHeaders(ctx, config));
+    post: async (path, body = { }, config = { }, ctx) => {
+        return axios.post(`${url.API_UNUJOBS}/${path}`, body, await ConfigHeaders(ctx, config));
     },
-    fetch: (path, config = { }, ctx) => {
-        return fetch(`${url.API_UNUJOBS}/${path}`, ConfigHeaders(ctx, config));
+    fetch: async (path, config = { }, ctx) => {
+        return fetch(`${url.API_UNUJOBS}/${path}`, await ConfigHeaders(ctx, config));
     },
     path: url.API_UNUJOBS
 };
@@ -64,14 +64,14 @@ export const unujobs = {
  * api para consumir el sistema de planillas
  */
 export const recursoshumanos = {
-    get: (path, config = { }, ctx) => {
-        return axios.get(`${url.API_RECURSOSHUMANOS}/${path}`, ConfigHeaders(ctx, config));
+    get: async (path, config = { }, ctx) => {
+        return axios.get(`${url.API_RECURSOSHUMANOS}/${path}`, await ConfigHeaders(ctx, config));
     },
-    post: (path, body = { }, config = { }, ctx) => {
-        return axios.post(`${url.API_RECURSOSHUMANOS}/${path}`, body, ConfigHeaders(ctx, config));
+    post: async (path, body = { }, config = { }, ctx) => {
+        return axios.post(`${url.API_RECURSOSHUMANOS}/${path}`, body, await ConfigHeaders(ctx, config));
     },
-    fetch: (path, config = { }, ctx) => {
-        return fetch(`${url.API_RECURSOSHUMANOS}/${path}`, ConfigHeaders(ctx, config));
+    fetch: async (path, config = { }, ctx) => {
+        return fetch(`${url.API_RECURSOSHUMANOS}/${path}`, await ConfigHeaders(ctx, config));
     },
     path: url.API_RECURSOSHUMANOS
 };

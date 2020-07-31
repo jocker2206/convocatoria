@@ -13,12 +13,12 @@ export default class ListOferta extends Component
 
     render() {
 
-        let { slug, titulo, dependencia, honorarios, money } = this.props;
+        let { slug, titulo, fecha_inicio, estado, honorarios, money } = this.props;
 
         return (
             <List.Item>
                 <List.Content floated='right'>
-                    <Button className="btn-mas-info mt-2"
+                    <Button className={`mt-2 ${estado == 'TERMINADO' ? 'btn-red' : 'btn-mas-info'}`}
                         onClick={(e) => {
                             e.preventDefault();
                             this.go(slug);
@@ -34,16 +34,16 @@ export default class ListOferta extends Component
                     </List.Header>
                     <List.Content>
                         <div className="row">
-                            <div className="col-md-12 mt-1">
+                            {/* <div className="col-md-12 mt-1">
                                 <b className="text-muted">
                                     <i className="fas fa-thumbtack"></i> Sede:
                                 </b>
-                            </div>
-                            <div className="col-md-12 mt-1">
+                            </div> */}
+                            {/* <div className="col-md-12 mt-1">
                                 <b className="text-muted">
                                     <i className="fas fa-building"></i> Dependencia/Oficina: {dependencia}
                                 </b>
-                            </div>
+                            </div> */}
                             <div className="col-md-12 mt-1">
                                 <b className="text-muted">
                                     <i className="fas fa-briefcase"></i> Perfil Laboral: {titulo}
@@ -52,6 +52,11 @@ export default class ListOferta extends Component
                             <div className="col-md-12 mt-1">
                                 <b className="text-muted">
                                     <i className="fas fa-coins"></i> Honorarios: {money} {honorarios}
+                                </b>
+                            </div>
+                            <div className="col-md-12 mt-1">
+                                <b className="text-muted">
+                                    <i className="fas fa-clock"></i> F. Inicio: {fecha_inicio}
                                 </b>
                             </div>
                         </div>

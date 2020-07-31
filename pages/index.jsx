@@ -126,9 +126,10 @@ export default class Index extends Component
                                                 <ListOferta key={`staff-${sta.id}`}
                                                     slug={sta.slug}
                                                     titulo={sta.perfil_laboral}
-                                                    dependencia={sta.dependencia}
+                                                    fecha_inicio={sta.fecha_inicio}
                                                     honorarios={sta.honorarios}
                                                     money="S./"
+                                                    estado={sta.estado}
                                                 />    
                                             )}
                                         </List>

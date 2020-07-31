@@ -5,7 +5,14 @@ import Show from '../components/show';
 
 export default class Navbar extends Component {
 
+    logout = async () => {
+        await Cookies.remove('convocatoria_auth');
+        // history.go('/');
+        alert('remove');
+    }
+
     render() {
+
 
         let { app, isLoggin } = this.props;
 
@@ -35,14 +42,23 @@ export default class Navbar extends Component {
                         </Show>
                     </ul>
                     <div className="form-inline mt-2 mt-md-0">
-                        <Link href="/login">
-                            <a className="mr-3"><i className="fas fa-sign-in-alt"></i> <b>Entrar</b></a>
-                        </Link>
-                        <button className="btn btn-outline"
-                            onClick={(e) => Router.push('/register')}
-                        >
-                            Regístrate
-                        </button>
+                        <Show condicion={!isLoggin}>
+                            <Link href="/login">
+                                <a className="mr-3"><i className="fas fa-sign-in-alt"></i> <b>Entrar</b></a>
+                            </Link>
+                            <button className="btn btn-outline"
+                                onClick={(e) => Router.push('/register')}
+                            >
+                                Regístrate
+                            </button>
+                        </Show>
+                        <Show condicion={isLoggin}>
+                            <button className="btn btn-outline"
+                                onClick={this.props.logout}
+                            >
+                                <i className="fas fa-times"></i> Cerrar Sesión
+                            </button>
+                        </Show>
                     </div>
                 </div>
             </nav>

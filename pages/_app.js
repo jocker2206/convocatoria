@@ -9,8 +9,9 @@ import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import Show from '../components/show';
 import LoaderPage from '../components/loaderPage';
-import { authentication } from '../services/apis';
+import { authentication, recursoshumanos } from '../services/apis';
 import LoadingGlobal from '../components/loadingGlobal';
+import Cookies from 'js-cookie';
 
 Router.onRouteChangeStart = () => {
     let loadingBrand = document.getElementById('loading-brand');
@@ -58,7 +59,32 @@ export default class MyApp extends App {
     }
 
     state = {
-        loading: false
+        loading: false,
+        auth: {}
+    }
+
+    componentDidMount = () => {
+        let { isLoggin } = this.props;
+        if (isLoggin) this.getAuth();
+    }
+
+    logout = async () => {
+        await Cookies.remove('convocatoria_token');
+        this.handleLoading(true);
+        history.go('/');
+    }
+
+    getAuth = async () => {
+        await recursoshumanos.get('auth/me')
+        .then(async res => {
+            let { success, message, postulante } = res.data;
+            if (!success) {
+                await this.logout();
+                throw new Error(message);
+            }
+            // setting auth
+            this.setState({ auth: postulante });
+        }).catch(err => console.log(err.message));
     }
 
     handleLoading = (value) => {
@@ -102,10 +128,10 @@ export default class MyApp extends App {
                     </Show>
 
                     <div className={`theme-${app.theme || 'default'}`}>
-                        <Navbar app={__app} isLoggin={isLoggin}/>
+                        <Navbar app={__app} isLoggin={isLoggin} logout={this.logout}/>
                         
                         <div className={`mt-5 pt-4`}>
-                            <Component {...pageProps} isLoggin={isLoggin} setLoading={this.handleLoading}/>
+                            <Component {...pageProps} isLoggin={isLoggin} setLoading={this.handleLoading} isloading={loading} logout={this.logout}/>
                         </div>
                     </div>
 

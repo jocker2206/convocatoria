@@ -12,10 +12,30 @@ body {
   margin-right: 0.4em;
 }
 
+.content-etapa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-etapa {
+  width: 50px;
+  height: 50px;
+  background: #fff59d;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .btn-convocatoria {
   height: 50px;
   font-size: 1.2em!important;
+}
+
+.btn-red {
+  background: #e53935!important;
+  color: #fff!important;
 }
 
 .select-convocatoria {
@@ -23,6 +43,23 @@ body {
   font-size: 1.2em!important;
 }
 
+.btn-cancel {
+  height: 50px;
+  font-size: 1.2em!important;
+  background: transparent!important;
+  border: 2px solid #e53935!important;
+  color: #e53935!important;
+}
+
+.btn-cancel:hover {
+  background: #e53935!important;
+  color: #fff!important;
+}
+
+.input-theme {
+  height: 50px!important;
+  font-size: 1.2em!important;
+}
 
 /* Theme default */
 .theme-green .navbar {
@@ -94,6 +131,11 @@ body {
   color: #fff!important;
 }
 
-.them-green .text-item {
+.theme-green .text-item {
   color: #00a28a!important;
+}
+
+.theme-green .bg-theme {
+  background: #00a28a!important;
+  color: #fff!important;
 }

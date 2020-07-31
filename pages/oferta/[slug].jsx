@@ -5,6 +5,7 @@ import Show from '../../components/show';
 import { authentication, recursoshumanos } from '../../services/apis';
 import Swal from 'sweetalert2';
 import Router from 'next/router';
+import { Confirm } from '../../services/utils';
 
 export default class Oferta extends Component
 {
@@ -19,14 +20,26 @@ export default class Oferta extends Component
         sede: {},
         dependencia: {},
         requisitos: [],
-        actividades: []
+        actividades: [],
+        etapa: {},
+        etapas: [
+            'CURRICULAR',
+            'CONOCIMIENTO',
+            'ENTREVISTA',
+            'GANADOR'
+        ]
     };  
 
-    componentDidMount = () => {
-        this.getSede();
-        this.getDependencia();
-        this.getRequisitos();
-        this.getActividades();
+    componentDidMount = async () => {
+        let { success } = this.props;
+        if (success) {
+            // validar login
+            this.getEtapa();
+            this.getSede();
+            this.getDependencia();
+            this.getRequisitos();
+            this.getActividades();
+        }
     }
 
     getDependencia = async () => {
@@ -70,7 +83,7 @@ export default class Oferta extends Component
     }
 
     handleLogin = async () => {
-        let answer = await Swal.fire({ icon: 'warning', text: `¿Deseas iniciar sesión?` });
+        let answer = await Confirm('warning', `¿Deseas iniciar sesión?`, 'Iniciar Sesión');
         if (answer) {
             let { push } = Router;
             let { staff } = this.props;
@@ -79,10 +92,45 @@ export default class Oferta extends Component
         }
     }
 
+    getEtapa = async () => {
+        let { isLoggin, staff } = this.props;
+        if (isLoggin) {
+            this.props.setLoading(true);
+            await recursoshumanos.get(`auth/etapa/${staff.slug}`)
+            .then(res => {
+                let { success, message, etapa } = res.data;
+                if (!success) throw new Error(message);
+                this.setState({ etapa });
+            }).catch(err => console.log(err.message));
+            this.props.setLoading(false);
+        }
+    }
+
+    postular = async () => {
+        let answer = await Confirm('warning', `¿Estas seguro en postular?`, 'Postular')
+        if (answer) {
+            let { staff } = this.props;
+            this.props.setLoading(true);
+            await recursoshumanos.get(`auth/postular/${staff.id}`)
+            .then(async res => {
+                this.props.setLoading(false);
+                let { success, message } = res.data;
+                if (!success) throw new Error(message);
+                await Swal.fire({ icon: 'success', text: message });
+                await this.getEtapa();
+            }).catch(err => {
+                Swal.fire({ icon: 'error', text: err.message });
+            });
+            this.props.setLoading(false);
+        }
+    }
+
     render() {
 
-        let { staff, isLoggin } = this.props;
-        let { sede, dependencia, requisitos, actividades } = this.state;
+        let { staff, isLoggin, success } = this.props;
+        let { sede, dependencia, requisitos, actividades, etapa, etapas } = this.state;
+
+        if (!success) return 'La pagina no está disponible'
 
         return (
             <div className="container mt-5">
@@ -102,10 +150,27 @@ export default class Oferta extends Component
                         <div className="card">
                             <div className="card-body">
                                 <div className="row">
-                                    <Show condicion={isLoggin}>
+                                    <Show condicion={isLoggin && etapa && etapa.current == 1}>
                                         <div className="col-md-12 mb-4">
                                             <h4><i className="fas fa-clock"></i> Etapa</h4>
                                             <hr/>
+
+                                            <dvi className="row">
+                                                {etapas.map((e, i) => 
+                                                    <div className="col-md-3" key={`etapa-${e}`}>
+                                                        <div className="card-body">
+                                                            <div className="row justify-content-center">
+                                                                <div className="col-md-12 text-center" style={{ display: "flex", justifyContent: 'center' }}>
+                                                                    <div className={`btn-etapa ${e == etapa.estado ? 'bg-theme' : ''}`}>
+                                                                        {i + 1}
+                                                                    </div>
+                                                                </div>
+                                                                <span>{e}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                )}
+                                            </dvi>
                                         </div>
                                     </Show>
 
@@ -188,10 +253,21 @@ export default class Oferta extends Component
                     <div className="col-md-3 ">
                         <Show condicion={!isLoggin}>
                             <Button fluid 
-                                className="btn-convocatoria"
+                                className={`${staff.estado == 'TERMINADO' ? 'btn-cancel' : 'btn-convocatoria'}`}
                                 onClick={this.handleLogin}
+                                disabled={staff.estado == 'TERMINADO'}
                             >
-                                Inicia Sesión
+                                {staff.estado == 'TERMINADO' ? 'Terminado' : 'Inicia Sesión'}
+                            </Button>
+                        </Show>
+
+                        <Show condicion={isLoggin}>
+                            <Button fluid 
+                                onClick={this.postular}
+                                disabled={etapa && etapa.current || staff.estado == 'TERMINADO'}
+                                className={staff.estado == 'TERMINADO' ? 'btn-cancel' : etapa && etapa.current == 1 ? 'btn-convocatoria' : 'btn-convocatoria bg-theme'}
+                            >
+                               {staff.estado == 'TERMINADO' ? 'Terminó' : etapa && etapa.current ? 'Postulando' : 'Postular'}
                             </Button>
                         </Show>
 
