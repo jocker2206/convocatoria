@@ -3579,10 +3579,15 @@ next@^9.3.5:
     webpack "4.42.1"
     webpack-sources "1.4.3"
 
-node-fetch@2.6.0, node-fetch@^2.6.0:
+node-fetch@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+
+node-fetch@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-libs-browser@^2.2.1:
   version "2.2.1"
@@ -5410,10 +5415,10 @@ util@^0.11.0:
   dependencies:
     inherits "2.0.3"
 
-validator-error@^1.1.2:
+validator-error-adonis@^1.0.0:
   version "1.1.2"
-  resolved "https://registry.yarnpkg.com/validator-error/-/validator-error-1.1.2.tgz#5fa61dd982ccc3d1d3be1f85904e0dedbe4c19ef"
-  integrity sha512-ub+x7ACrWwETpTwOH18+LHAyPLgzVr5kUN2aFUq+VbcTt5cXxM/XqVcra2YieOlhAhQNad3EglOIQlpYi9fPHg==
+  resolved "https://registry.yarnpkg.com/validator-error-adonis/-/validator-error-adonis-1.1.2.tgz#99ebcbfa478f8afc97b02306f876e8a2fbebcda1"
+  integrity sha512-j3RqBIX5APfl7d71h8AmfOPmrsM9gsWEudkKWQMiT7+eYQ5vvR8v4i6khmjshS3IIJTi7rZRMMPBIokh+Dhw5w==
 
 vendors@^1.0.0:
   version "1.0.4"
